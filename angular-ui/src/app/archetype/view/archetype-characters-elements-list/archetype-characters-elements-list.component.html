@@ -1,0 +1,24 @@
+<div class="archetypes-with-details" *ngFor="let group of archetypesWithDetailsAndCharacters">
+    <div class="archetype-details">
+      <h2>{{ group.archetype.name }}</h2>
+      <p><strong>Base Health:</strong> {{ group.baseHealth }}</p>
+      <p><strong>Base Damage:</strong> {{ group.baseDamage }}</p>
+    </div>
+  
+    <div class="characters-list">
+      <h3>Characters:</h3>
+      <ul *ngIf="group.characters.length > 0; else noCharacters">
+        <li *ngFor="let character of group.characters">
+          <strong>{{ character.name }}</strong>&nbsp;
+          <a [routerLink]="['/characters', character.id]">View</a>&nbsp;
+          <a [routerLink]="['/characters', character.id, group.archetype.id, 'edit']">Edit</a>&nbsp;
+          <button (click)="onCharacterDelete(character.id)">Delete</button>&nbsp;
+        </li>
+      </ul>
+      <a [routerLink]="['/characters', group.archetype.id, 'create']">Add new character</a>
+      <ng-template #noCharacters>
+        <p>No characters available for this archetype.</p>
+      </ng-template>
+    </div>
+  </div>
+  

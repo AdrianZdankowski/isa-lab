@@ -1,0 +1,129 @@
+@gatewayAddress = http://localhost:8084
+
+### Get all characters
+# @name getCharacters
+GET {{gatewayAddress}}/api/characters 
+Accept: application/json
+
+@characterId = {{getCharacters.response.body.characters[0].id}}
+@characterName = {{getCharacters.response.body.characters[1].name}}
+
+### Get character by id
+GET {{gatewayAddress}}/api/characters/{{characterId}}
+Accept: application/json
+
+### Get character by name
+# @name getCharacterByName
+GET {{gatewayAddress}}/api/characters/name/{{characterName}}
+Accept: application/json
+
+@archetypeId = {{getCharacterByName.response.body.archetypeInfo.id}}
+@elementId = {{getCharacterByName.response.body.elementInfo.id}}
+
+### Get characters by archetype id
+GET {{gatewayAddress}}/api/archetypes/{{archetypeId}}/characters
+Accept: application/json
+
+### Add a new Character
+POST {{gatewayAddress}}/api/characters
+Content-Type: application/json
+
+{
+    "name": "Olaf",
+    "powerLevel": 10,
+    "archetypeId": "{{archetypeId}}",
+    "elementId": "{{elementId}}"
+}
+
+### Update character by id
+PATCH {{gatewayAddress}}/api/characters/{{characterId}}
+Content-Type: application/json
+
+{
+    "name": "Pawel",
+    "powerLevel": 75,
+    "elementId": "{{elementId}}"
+}
+
+### Delete character by id
+DELETE {{gatewayAddress}}/api/characters/{{characterId}}
+
+### Get all archetypes
+# @name getArchetypes
+GET {{gatewayAddress}}/api/archetypes
+Accept: application/json
+
+@secondArchetypeId = {{getArchetypes.response.body.archetypes[1].id}}
+@thirdArchetypeName = {{getArchetypes.response.body.archetypes[2].name}}
+
+### Get archetype by id
+GET {{gatewayAddress}}/api/archetypes/{{secondArchetypeId}}
+Accept: application/json
+
+### Get archetype by name
+GET {{gatewayAddress}}/api/archetypes/name/{{thirdArchetypeName}}
+Accept: application/json
+
+### Add a new archetype
+POST {{gatewayAddress}}/api/archetypes
+Content-Type: application/json
+
+{
+    "name": "Warrior",
+    "baseHealth": 150,
+    "baseDamage": 125
+}
+
+### Update archetype by UUID
+PATCH {{gatewayAddress}}/api/archetypes/{{secondArchetypeId}}
+Content-Type: application/json
+
+{
+    "name": "Mage",
+    "baseHealth":300,
+    "baseDamage":300
+}
+
+### Delete archetype by UUID
+DELETE {{gatewayAddress}}/api/archetypes/{{archetypeId}}
+Accept: application/json
+
+### Get all elements
+# @name getElements
+GET {{gatewayAddress}}/api/elements
+Accept: application/json
+
+@secondElementId = {{getElements.response.body.elements[1].id}}
+@thirdElementName = {{getElements.response.body.elements[2].name}}
+
+### Get element by UUID
+GET {{gatewayAddress}}/api/elements/{{secondElementId}}
+Accept: application/json
+
+### Get element by Name
+GET {{gatewayAddress}}/api/elements/name/{{thirdElementName}}
+Accept: application/json
+
+### Add new element
+POST {{gatewayAddress}}/api/elements
+Content-Type: application/json
+
+{
+    "name": "Strand",
+    "side": "Dark"
+}
+
+### Update element by UUID
+PATCH {{gatewayAddress}}/api/elements/{{secondElementId}}
+Content-Type: application/json
+
+{
+    "name": "Water",
+    "side": "Light"
+}
+
+### Delete element by UUID
+DELETE {{gatewayAddress}}/api/elements/{{secondElementId}}
+Accept: application/json
+
+

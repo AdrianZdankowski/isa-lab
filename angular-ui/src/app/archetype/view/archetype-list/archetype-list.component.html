@@ -1,0 +1,35 @@
+
+<article class="text--justified">
+    <header><h2>Archetypes</h2></header>
+  
+    <table *ngIf="archetypes">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>View</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let archetype of archetypes.archetypes">
+          <td>{{archetype.name}}</td>
+          <td>
+            <a [routerLink]="['/archetypes', archetype.id]">View</a>
+          </td>
+          <td>
+            <a [routerLink]="['/archetypes', archetype.id, 'edit']">Edit</a>
+          </td>
+          <td>
+            <button (click)="onDelete(archetype)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="add-entity-div">
+      <a [routerLink]="['/archetypes/create']">Add</a>
+    </div>
+  </article>
+
+ 
+  

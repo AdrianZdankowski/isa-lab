@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  mysql-database:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: characters_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+
+  postgres-database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: archetypes_db
+    ports:
+      - "5432:5432"
+
+  
+  characters:
+    build:
+      context: .
+      dockerfile: character/demo/Dockerfile
+    restart: always
+    environment:
+      SERVER_PORT: 8080
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-database:3306/characters_db
+      SPRING_DATASOURCE_DRIVERCLASSNAME: com.mysql.cj.jdbc.Driver
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQLDialect
+      SPRING_JPA_GENERATE_DDL: true
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - mysql-database
+
+  archetypes:
+    build:
+      context: .
+      dockerfile: archetype/demo/Dockerfile
+    restart: always
+    environment:
+      SERVER_PORT: 8080
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-database:5432/archetypes_db
+      SPRING_DATASOURCE_DRIVERCLASSNAME: org.postgresql.Driver
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_GENERATE_DDL: true
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      API_CHARACTER_URL: "http://characters:8080"
+    depends_on:
+      - postgres-database
+
+  gateway:
+    image: api-gateway
+    restart: always
+    environment:
+      DEMO_CHARACTER_URL: "http://characters:8080"
+      DEMO_ARCHETYPE_URL: "http://archetypes:8080"
+      DEMO_GATEWAY_HOST: "gateway:8080"
+
+  angular-nginx:
+    image: angular-nginx
+    restart: always
+    environment:
+      API_URL: http://gateway:8080/api
+    ports:
+      - "8086:80"

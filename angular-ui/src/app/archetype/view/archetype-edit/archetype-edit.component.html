@@ -1,0 +1,41 @@
+<article *ngIf="archetype">
+    <header><h2>Edit archetype</h2></header>
+  
+    <form class="container"  #form="ngForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-4 p-2">
+          <div>
+            <label for="name">Name:</label>
+            <input id="name" name="name" [(ngModel)]="archetype.name"/>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-4 p-2">
+          <div>
+            <label for="baseHealth">Base Health:</label>
+            <input id="baseHealth" name="baseHealth" [(ngModel)]="archetype.baseHealth"/>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-4 p-2">
+          <div>
+            <label for="baseDamage">Base Damage:</label>
+            <input id="baseDamage" name="baseDamage" [(ngModel)]="archetype.baseDamage"/>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-2 p-2">
+          <button type="submit">Update</button>
+        </div>
+        <div class="col-2 p-2">
+          <button type="button" (click)="form.resetForm(original)">Reset</button>
+        </div>
+      </div>
+    </form>
+  </article>
