@@ -1,0 +1,21 @@
+<header><h2>Add new Archetype</h2></header>
+
+<form (ngSubmit)="onSubmit()" #archetypeForm="ngForm">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" name="name" [(ngModel)]="archetype.name" required>
+  </div>
+
+  <div>
+    <label for="baseHealth">Base HP:</label>
+    <input id="baseHealth" name="baseHealth" type="number" [(ngModel)]="archetype.baseHealth" required>
+  </div>
+
+  <div>
+    <label for="baseDamage">Base Damage:</label>
+    <input id="baseDamage" name="baseDamage" type="number" [(ngModel)]="archetype.baseDamage" required>
+  </div>
+
+  <button type="submit" [disabled]="archetypeForm.invalid">Wyślij</button>
+</form>
+

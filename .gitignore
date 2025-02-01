@@ -1,0 +1,14 @@
+archetype/.idea
+archetype/demo/target
+
+character/.idea
+character/demo/target
+
+elements/.idea
+elements/demo/target
+
+gateway/.idea
+gateway/demo/target
+
+angular-ui/.angular
+angular-ui/node_modules

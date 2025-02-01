@@ -1,0 +1,27 @@
+<article *ngIf="character">
+  <header><h2>Edit character</h2></header>
+
+  <form class="container"  #form="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-4 p-2">
+        <div>
+          <label for="name">Name:</label>
+          <input id="name" name="name" [(ngModel)]="character.name"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 p-2">
+        <div>
+          <label for="powerLevel">Power level:</label>
+          <input id="powerLevel" name="powerLevel" [(ngModel)]="character.powerLevel"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2 p-2">
+        <button type="submit">Update</button>
+      </div>
+    </div>
+  </form>
+</article>
